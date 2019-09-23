@@ -218,10 +218,13 @@ class Game extends Component {
             <div className="panel panel-default">
               <div className="panel-heading">
                 <a
-                  className="fa fa-plus"
+                  className="btn btn-primary"
                   data-toggle="collapse"
                   href="#collapseExample"
-                />
+                  type="button"
+                >
+                  <i className="fa fa-plus" />
+                </a>
               </div>
               <div className="panel-body collapse" id="collapseExample">
                 <div className="row">
@@ -260,7 +263,7 @@ class Game extends Component {
                         combination.length === 35
                       }
                       onClick={() => this.addTicket(true)}
-                      className="btn btn-default btn-block"
+                      className="btn btn-primary btn-block"
                     >
                       Dodaj igrača
                     </button>
@@ -297,7 +300,7 @@ class Game extends Component {
                 <button
                   disabled={isPlaying || this.state.combination.length === 35}
                   onClick={() => this.addTicket(false)}
-                  className="btn btn-default btn-block"
+                  className="btn btn-primary btn-block"
                 >
                   Generiši tiket
                 </button>
@@ -320,7 +323,7 @@ class Game extends Component {
                           >
                             <td>
                               <button
-                                className="btn btn-sm"
+                                className="btn btn-primary"
                                 onClick={() => this.removeTicket(player.id)}
                                 disabled={combination.length !== 0}
                               >
@@ -384,7 +387,7 @@ class Game extends Component {
                   <button
                     disabled={isPlaying || tickets.length === 0}
                     onClick={this.startGame}
-                    className="btn btn-success btn-block"
+                    className="btn btn-primary btn-block"
                   >
                     Započni igru
                   </button>
@@ -393,7 +396,7 @@ class Game extends Component {
                   <button
                     disabled={isPlaying || tickets.length === 0}
                     onClick={this.resetGame}
-                    className="btn btn-success btn-block"
+                    className="btn btn-primary btn-block"
                   >
                     Počni novu igru
                   </button>
