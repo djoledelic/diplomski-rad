@@ -204,8 +204,13 @@ class Game extends Component {
   };
 
   render = () => {
-    const { lastDrawn, combination, tickets, isPlaying } = this.state;
-    const { numbers } = this.state.player;
+    const {
+      player: { numbers, name, credit },
+      lastDrawn,
+      combination,
+      tickets,
+      isPlaying
+    } = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -213,7 +218,7 @@ class Game extends Component {
             <div className="panel panel-default">
               <div className="panel-heading">
                 <a
-                  className="glyphicon glyphicon-plus"
+                  className="fa fa-plus"
                   data-toggle="collapse"
                   href="#collapseExample"
                 />
@@ -223,40 +228,36 @@ class Game extends Component {
                   <div className="col-md-5">
                     <div className="form-group">
                       <input
-                        value={this.state.player.name}
+                        value={name}
                         onChange={e => this.handleInput(e)}
                         name="name"
                         type="text"
                         className="form-control"
                         placeholder="Ime igrača"
-                        disabled={
-                          isPlaying || this.state.combination.length === 35
-                        }
+                        disabled={isPlaying || combination.length === 35}
                       />
                     </div>
                     <div className="form-group">
                       <input
-                        value={this.state.player.credit}
+                        value={credit}
                         onChange={e => this.handleInput(e)}
                         name="credit"
                         type="number"
                         className="form-control"
                         placeholder="Kredit"
-                        disabled={
-                          isPlaying || this.state.combination.length === 35
-                        }
+                        disabled={isPlaying || combination.length === 35}
                       />
                     </div>
                     <button
                       disabled={
                         isPlaying ||
-                        (this.state.combination.length === 0 &&
+                        (combination.length === 0 &&
                           !(
-                            this.state.player.name !== "" &&
-                            this.state.player.credit != null &&
-                            this.state.player.numbers.length === 6
+                            name !== "" &&
+                            credit != null &&
+                            numbers.length === 6
                           )) ||
-                        this.state.combination.length === 35
+                        combination.length === 35
                       }
                       onClick={() => this.addTicket(true)}
                       className="btn btn-default btn-block"
@@ -318,15 +319,22 @@ class Game extends Component {
                             key={index}
                           >
                             <td>
-                              <a
-                                className="glyphicon glyphicon-minus"
+                              <button
+                                className="btn btn-sm"
                                 onClick={() => this.removeTicket(player.id)}
-                              />
-                              {`  ${player.name}`} <br />
-                              <span style={{ color: "green" }}>
-                                {player.earnings > 0
-                                  ? `+${player.earnings}`
-                                  : null}
+                                disabled={combination.length !== 0}
+                              >
+                                <i className="fa fa-minus" />
+                              </button>
+                              <span>
+                                {`  ${player.name}`}
+                                <span
+                                  style={{ color: "green", fontWeight: "bold" }}
+                                >
+                                  {player.earnings > 0
+                                    ? ` +${player.earnings}`
+                                    : null}
+                                </span>
                               </span>
                             </td>
                             <td>
@@ -360,11 +368,7 @@ class Game extends Component {
             <div className="panel panel-default">
               <div className="panel-heading">Status igre</div>
               <div className="panel-body">
-                <div
-                  className={
-                    this.state.isPlaying ? "animated flipInX" : "hidden"
-                  }
-                >
+                <div className={isPlaying ? "animated flipInX" : "hidden"}>
                   <h2 className="text-center">KVOTA</h2>
                   <h3 className="text-center animated tada infinite">
                     {this.getDrawn(combination, lastDrawn).length < 6
@@ -376,22 +380,18 @@ class Game extends Component {
                         }.00`}
                   </h3>
                 </div>
-                {this.state.combination.length === 0 ? (
+                {combination.length === 0 ? (
                   <button
-                    disabled={
-                      this.state.isPlaying || this.state.tickets.length === 0
-                    }
+                    disabled={isPlaying || tickets.length === 0}
                     onClick={this.startGame}
                     className="btn btn-success btn-block"
                   >
-                    Izvuci brojeve
+                    Započni igru
                   </button>
                 ) : null}
-                {this.state.combination.length === 35 ? (
+                {combination.length === 35 ? (
                   <button
-                    disabled={
-                      this.state.isPlaying || this.state.tickets.length === 0
-                    }
+                    disabled={isPlaying || tickets.length === 0}
                     onClick={this.resetGame}
                     className="btn btn-success btn-block"
                   >
