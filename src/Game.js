@@ -68,6 +68,19 @@ class Game extends Component {
     });
   };
 
+  editTicket = player => {
+    const newTickets = this.state.tickets.filter(x => x.id !== player.id);
+    this.setState({
+      ...this.state,
+      player: {
+        name: player.name,
+        credit: player.credit.toString(),
+        numbers: player.numbers
+      },
+      tickets: newTickets
+    });
+  };
+
   startGame = () => {
     this.setState({
       ...this.state,
@@ -257,13 +270,15 @@ class Game extends Component {
                         (combination.length === 0 &&
                           !(
                             name !== "" &&
-                            credit != null &&
+                            credit !== "" &&
                             numbers.length === 6
                           )) ||
                         combination.length === 35
                       }
                       onClick={() => this.addTicket(true)}
                       className="btn btn-primary btn-block"
+                      data-toggle="collapse"
+                      data-target="#collapseExample"
                     >
                       Dodaj igrača
                     </button>
@@ -307,10 +322,10 @@ class Game extends Component {
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th>Igrač</th>
-                      <th>Kredit($):</th>
-                      <th>Brojevi:</th>
-                      <th>Ulog($):</th>
+                      <th width="35%">Igrač</th>
+                      <th width="10%">Kredit($):</th>
+                      <th width="45%">Brojevi:</th>
+                      <th width="10%">Ulog($):</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -322,43 +337,86 @@ class Game extends Component {
                             key={index}
                           >
                             <td>
-                              <button
-                                className="btn btn-primary"
-                                onClick={() => this.removeTicket(player.id)}
-                                disabled={combination.length !== 0}
-                              >
-                                <i className="fa fa-minus" />
-                              </button>
-                              <span>
-                                {`  ${player.name}`}
-                                <span
-                                  style={{ color: "green", fontWeight: "bold" }}
+                              <div style={{ display: "flex" }}>
+                                <div
+                                  style={{ marginLeft: -15, marginRight: 5 }}
                                 >
-                                  {player.earnings > 0
-                                    ? ` +${player.earnings}`
-                                    : null}
-                                </span>
-                              </span>
-                            </td>
-                            <td>
-                              <b>{player.credit}</b>
-                            </td>
-                            <td>
-                              {[...player.numbers]
-                                .sort((a, b) => a - b)
-                                .map((number, index) => (
-                                  <span
-                                    key={index}
-                                    className={addClass(
-                                      this.getDrawn(combination, lastDrawn),
-                                      number
-                                    )}
+                                  <button
+                                    className="btn btn-primary"
+                                    onClick={() => this.removeTicket(player.id)}
+                                    disabled={combination.length !== 0}
                                   >
-                                    &nbsp;{number}&nbsp;
+                                    <i className="fa fa-minus" />
+                                  </button>
+                                </div>
+                                <div style={{ marginRight: 5 }}>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={() => this.editTicket(player)}
+                                    disabled={
+                                      combination.length !== 0 ||
+                                      name !== "" ||
+                                      credit !== "" ||
+                                      numbers.length === 6
+                                    }
+                                    data-toggle="collapse"
+                                    data-target="#collapseExample"
+                                  >
+                                    <i className="fa fa-pencil" />
+                                  </button>
+                                </div>
+
+                                <div style={{ marginTop: 5 }}>
+                                  <span>
+                                    {`  ${player.name}`}
+                                    <span
+                                      style={{
+                                        color: "green",
+                                        fontWeight: "bold"
+                                      }}
+                                    >
+                                      {player.earnings > 0
+                                        ? ` +${player.earnings}`
+                                        : null}
+                                    </span>
                                   </span>
-                                ))}
+                                </div>
+                              </div>
                             </td>
-                            <td>{config.bet.toFixed(2)}</td>
+                            <td>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ marginTop: 5 }}>
+                                  <b>{player.credit}</b>
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ marginTop: 5 }}>
+                                  {[...player.numbers]
+                                    .sort((a, b) => a - b)
+                                    .map((number, index) => (
+                                      <span
+                                        key={index}
+                                        className={addClass(
+                                          this.getDrawn(combination, lastDrawn),
+                                          number
+                                        )}
+                                      >
+                                        &nbsp;{number}&nbsp;
+                                      </span>
+                                    ))}
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              <div style={{ display: "flex" }}>
+                                <div style={{ marginTop: 5 }}>
+                                  {config.bet.toFixed(2)}
+                                </div>
+                              </div>
+                            </td>
                           </tr>
                         ))
                       : null}
