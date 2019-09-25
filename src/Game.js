@@ -264,6 +264,8 @@ class Game extends Component {
                       }
                       onClick={() => this.addTicket(true)}
                       className="btn btn-primary btn-block"
+                      data-toggle="collapse"
+                      data-target="#collapseExample"
                     >
                       Dodaj igrača
                     </button>
@@ -376,11 +378,9 @@ class Game extends Component {
                   <h3 className="text-center animated tada infinite">
                     {this.getDrawn(combination, lastDrawn).length < 6
                       ? ""
-                      : `${
-                          config.odds[
-                            this.getDrawn(combination, lastDrawn).length
-                          ]
-                        }.00`}
+                      : config.odds[
+                          this.getDrawn(combination, lastDrawn).length
+                        ].toFixed(2)}
                   </h3>
                 </div>
                 {combination.length === 0 ? (

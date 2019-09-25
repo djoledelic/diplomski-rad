@@ -14,12 +14,10 @@ body {
   margin-bottom: 0px;
 }
 
-/* Mark winner */
 .mark {
   background-color: #8bc34a;
   transition: all 0.5s;
 }
-/* Ball colors */
 .red {
   background: -webkit-radial-gradient(
     center,
@@ -89,7 +87,7 @@ body {
     #000000 100%
   );
 }
-/* Ball default styles */
+
 .ball {
   border-radius: 100%;
   width: 50px;
@@ -111,7 +109,7 @@ body {
   border-radius: 50%;
   margin-left: -15px;
 }
-/* Marker for matched value */
+
 .match {
   display: inline-block;
   background-color: #cd2200;
@@ -123,10 +121,8 @@ body {
   width: 30px;
   height: 22px;
   text-align: center;
-  /*border-left: 1px solid #FFF;
-    border-right: 1px solid #FFF;*/
 }
-/* Custom styles */
+
 .default {
   display: inline-block;
   font-weight: bold;
@@ -156,7 +152,7 @@ body {
   font-weight: bolder;
 }
 
-/* Animations */
+/* Animacije */
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
